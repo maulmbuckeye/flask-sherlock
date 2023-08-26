@@ -1,0 +1,6 @@
+#!/bin/bash
+
+CMD="docker run --detach --name sherlock --publish 80:8080 --rm flask-sherlock"
+
+echo "$CMD"
+eval "$CMD"

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+CMD="docker build --tag flask-sherlock --build-arg FLASK_DEBUG=True ."
+
+echo "$CMD"
+eval "$CMD"
