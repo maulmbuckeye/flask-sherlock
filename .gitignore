@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Junk files
+nohup.out
+.idea
+
 # C extensions
 *.so
 
