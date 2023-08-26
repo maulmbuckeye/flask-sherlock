@@ -6,6 +6,7 @@ __pycache__/
 # Junk files
 nohup.out
 .idea
+results.txt
 
 # C extensions
 *.so
