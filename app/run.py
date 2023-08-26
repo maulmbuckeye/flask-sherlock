@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import render_template
 
 from rengine import Sherlock
 
@@ -73,6 +74,6 @@ def pretty():
     return html
 
 
-@app.route("/", methods=["GET"])
-def root():
-    return "<html><h1>hello</h1></html>"
+@app.route("/user/<name>", methods=["GET"])
+def root(name):
+    return render_template('hello.html', name=name)

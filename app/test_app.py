@@ -42,7 +42,8 @@ def test_lost_in_translation(client):
     assert len(response.get_json()) >= 5
 
 
-def test_root(client):
-    response = client.get("/")
+def test_user(client):
+    response = client.get("/user/Mike")
     assert response.status_code == 200
-    assert b"hello" in response.get_data()
+    assert b"Hello" in response.get_data()
+    assert b"Mike" in response.get_data()
