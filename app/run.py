@@ -52,7 +52,8 @@ def recommend():
 
     return jsonify(recommendation)
 
-@app.route("/api/v1/movies/pretty", methods=["GET"])
+
+@app.route("/pretty", methods=["GET"])
 def pretty():
     """
     Function loads movies from db and returns recommendations.
@@ -65,13 +66,8 @@ def pretty():
     sherlock = Sherlock(MOVIES, request.args)
     recommendation = sherlock.recommend()
 
-    html = "<html>"
-    for movie in recommendation:
-        html += f"<h1>{movie['title']} ({movie['year']})</h1>"
-        directors = ", ".join(movie['director'])
-        html += f"directed by {directors}"
-    html += "</html>"
-    return html
+    html = ""
+    return render_template('movie_list.html', movies=recommendation)
 
 
 @app.route("/user/<name>", methods=["GET"])

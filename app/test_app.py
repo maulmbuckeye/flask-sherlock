@@ -1,4 +1,5 @@
 import pytest
+import re
 
 from run import app as application
 
@@ -47,3 +48,15 @@ def test_user(client):
     assert response.status_code == 200
     assert b"Hello" in response.get_data()
     assert b"Mike" in response.get_data()
+
+
+YearInParens = b'\([12]\d{3}\)' # noqa
+
+
+def test_pretty(client):
+    response = client.get("/pretty")
+    assert response.status_code == 200
+
+    text = response.get_data()
+    assert b"<h1>" in text
+    assert re.search(YearInParens, text)
