@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.json.ensure_ascii = False
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 
+
 def read_data(source):
     """
     Reads file that is expected to hold JSON encoded content.
@@ -40,6 +41,7 @@ def recommend():
     """
     Function loads movies from db and returns recommendations.
     """
+    # noinspection PyPep8Naming
     MOVIES, errors = read_data(f"{APP_DIR}/db.json")
     if errors:
         return jsonify({"errors": errors, "status_code": 500}), 500
@@ -48,3 +50,29 @@ def recommend():
     recommendation = sherlock.recommend()
 
     return jsonify(recommendation)
+
+@app.route("/api/v1/movies/pretty", methods=["GET"])
+def pretty():
+    """
+    Function loads movies from db and returns recommendations.
+    """
+    # noinspection PyPep8Naming
+    MOVIES, errors = read_data(f"{APP_DIR}/db.json")
+    if errors:
+        return jsonify({"errors": errors, "status_code": 500}), 500
+
+    sherlock = Sherlock(MOVIES, request.args)
+    recommendation = sherlock.recommend()
+
+    html = "<html>"
+    for movie in recommendation:
+        html += f"<h1>{movie['title']} ({movie['year']})</h1>"
+        directors = ", ".join(movie['director'])
+        html += f"directed by {directors}"
+    html += "</html>"
+    return html
+
+
+@app.route("/", methods=["GET"])
+def root():
+    return "<html><h1>hello</h1></html>"

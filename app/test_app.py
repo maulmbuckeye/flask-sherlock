@@ -27,12 +27,22 @@ def test_api(client):
     assert response.is_json
     assert response.get_json()[0]["title"] != ""
 
+
+def test_kingpin(client):
     response = client.get("/api/v1/movies/recommend?title=Kingpin")
     assert response.status_code == 200
     assert response.is_json
     assert len(response.get_json()) >= 2
 
+
+def test_lost_in_translation(client):
     response = client.get("/api/v1/movies/recommend?title=Lost%20in%20Translation")
     assert response.status_code == 200
     assert response.is_json
     assert len(response.get_json()) >= 5
+
+
+def test_root(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert b"hello" in response.get_data()
